@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	gcg "go-code-generator/templates/main"
+	gcgm "go-code-generator/templates/main"
 	"io/ioutil"
 	"os"
 	"text/template"
@@ -24,7 +24,7 @@ func main() {
 
 	var tpl = template.Must(template.New(fmt.Sprintf(codePath, "main")).Parse(string(tplContent)))
 
-	tpl.Execute(gf, gcg.New("main", "ServiceName"))
+	tpl.Execute(gf, gcgm.New())
 
 	fmt.Println(successMessage)
 }
