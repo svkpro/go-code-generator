@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"go-code-generator/helpers"
+	gcgc "go-code-generator/templates/config"
 	gcgm "go-code-generator/templates/main"
 	"io/ioutil"
 	"os"
@@ -16,20 +17,24 @@ const (
 )
 
 func main() {
+	generate("cmd", "main", gcgm.New())
+	generate("config", "config", gcgc.New())
+
+	fmt.Println(successMessage)
+}
+
+func generate(dn string, pn string, t interface{}) {
 	wd, err := os.Getwd()
 	die(err)
-	mwd := fmt.Sprintf(codePath, wd, "cmd")
-	helpers.MakeDir(mwd)
-	gf, err := os.Create(fmt.Sprintf("%s/main.go", mwd))
+	cwd := fmt.Sprintf(codePath, wd, dn)
+	helpers.MakeDir(cwd)
+	gf, err := os.Create(fmt.Sprintf("%s/%s.go", cwd, pn))
 	die(err)
 	defer gf.Close()
 
-	tplContent, err := ioutil.ReadFile(fmt.Sprintf(tplPath, "main/main.tpl"))
+	tplContent, err := ioutil.ReadFile(fmt.Sprintf(tplPath, fmt.Sprintf("%s/%s.tpl", pn, pn)))
 	die(err)
 
-	var tpl = template.Must(template.New(fmt.Sprintf(codePath, "", "main")).Parse(string(tplContent)))
-
-	tpl.Execute(gf, gcgm.New())
-
-	fmt.Println(successMessage)
+	var tpl = template.Must(template.New(fmt.Sprintf(codePath, "", pn)).Parse(string(tplContent)))
+	tpl.Execute(gf, t)
 }
