@@ -1,6 +1,7 @@
 package helpers
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -21,7 +22,7 @@ func MakeDir(dn string) {
 	}
 }
 
-func Generate(dn string, pn string, t interface{}) {
+func GenerateGo(dn string, pn string, gt interface{}) {
 	wd, err := os.Getwd()
 	die(err)
 	cwd := fmt.Sprintf(codePath, wd, dn)
@@ -35,5 +36,17 @@ func Generate(dn string, pn string, t interface{}) {
 	die(err)
 
 	var tpl = template.Must(template.New(fmt.Sprintf(codePath, "", pn)).Parse(string(tplContent)))
-	tpl.Execute(gf, t)
+	tpl.Execute(gf, gt)
+}
+
+func GenerateJson(dn string, pn string, jt interface{}) {
+	wd, err := os.Getwd()
+	die(err)
+	cwd := fmt.Sprintf(codePath, wd, dn)
+	MakeDir(cwd)
+
+	rankingsJson, err := json.Marshal(jt)
+	die(err)
+
+	err = ioutil.WriteFile(fmt.Sprintf("%s/%s.json", cwd, pn), rankingsJson, 0775)
 }

@@ -12,7 +12,7 @@ type MainTpl struct {
 	ServiceName string `json:"serviceName"`
 }
 
-func New() *MainTpl {
+func NewGoTpl() *MainTpl {
 	wd, err := os.Getwd()
 
 	tj, err := filepath.Abs(wd + "/templates/main/main.json")

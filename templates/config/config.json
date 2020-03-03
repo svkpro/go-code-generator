@@ -1,4 +1,5 @@
 {
   "packageName": "config",
-  "serviceName": "Config"
+  "serviceName": "Config",
+  "httpPort": "HTTP_PORT"
 }

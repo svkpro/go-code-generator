@@ -12,8 +12,9 @@ const (
 )
 
 func main() {
-	helpers.Generate("cmd", "main", gcgm.New())
-	helpers.Generate("config", "config", gcgc.New())
+	helpers.GenerateGo("cmd", "main", gcgm.NewGoTpl())
+	helpers.GenerateGo("config", "config", gcgc.NewGoTpl())
+	helpers.GenerateJson("config", "config", gcgc.NewJsonTpl())
 
 	fmt.Println(successMessage)
 }

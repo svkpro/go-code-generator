@@ -7,12 +7,17 @@ import (
 	"path/filepath"
 )
 
-type ConfigTpl struct {
+type ConfigGoTpl struct {
 	PackageName string `json:"packageName"`
 	ServiceName string `json:"serviceName"`
+	HttpPort    string `json:"httpPort"`
 }
 
-func New() *ConfigTpl {
+type ConfigJsonTpl struct {
+	HTTP_PORT string
+}
+
+func NewGoTpl() *ConfigGoTpl {
 	wd, err := os.Getwd()
 
 	tj, err := filepath.Abs(wd + "/templates/config/config.json")
@@ -35,11 +40,17 @@ func New() *ConfigTpl {
 		panic(err)
 	}
 
-	t := &ConfigTpl{}
+	t := &ConfigGoTpl{}
 	err = json.Unmarshal(data, t)
 	if err != nil {
 		panic(err)
 	}
 
 	return t
+}
+
+func NewJsonTpl() *ConfigJsonTpl {
+	return &ConfigJsonTpl{
+		HTTP_PORT: "19001",
+	}
 }
