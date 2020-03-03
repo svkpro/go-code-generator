@@ -24,16 +24,16 @@ func MakeDir(dn string) {
 
 func GenerateGo(dn string, pn string, gt interface{}) {
 	wd, err := os.Getwd()
-	die(err)
+	Die(err)
 	cwd := fmt.Sprintf(codePath, wd, dn)
 	MakeDir(cwd)
 
 	gf, err := os.Create(fmt.Sprintf("%s/%s.go", cwd, pn))
-	die(err)
+	Die(err)
 	defer gf.Close()
 
 	tplContent, err := ioutil.ReadFile(fmt.Sprintf(tplPath, fmt.Sprintf("%s/%s.tpl", pn, pn)))
-	die(err)
+	Die(err)
 
 	var tpl = template.Must(template.New(fmt.Sprintf(codePath, "", pn)).Parse(string(tplContent)))
 	tpl.Execute(gf, gt)
@@ -41,12 +41,12 @@ func GenerateGo(dn string, pn string, gt interface{}) {
 
 func GenerateJson(dn string, pn string, jt interface{}) {
 	wd, err := os.Getwd()
-	die(err)
+	Die(err)
 	cwd := fmt.Sprintf(codePath, wd, dn)
 	MakeDir(cwd)
 
 	rankingsJson, err := json.Marshal(jt)
-	die(err)
+	Die(err)
 
 	err = ioutil.WriteFile(fmt.Sprintf("%s/%s.json", cwd, pn), rankingsJson, 0775)
 }
