@@ -32,7 +32,7 @@ func GenerateGo(dn string, pn string, gt interface{}) {
 	Die(err)
 	defer gf.Close()
 
-	tplContent, err := ioutil.ReadFile(fmt.Sprintf(tplPath, fmt.Sprintf("%s/%s.tpl", pn, pn)))
+	tplContent, err := ioutil.ReadFile(fmt.Sprintf(tplPath, fmt.Sprintf("%s/%s.tpl", dn, pn)))
 	Die(err)
 
 	var tpl = template.Must(template.New(fmt.Sprintf(codePath, "", pn)).Parse(string(tplContent)))

@@ -4,7 +4,8 @@ import (
 	"fmt"
 	"go-code-generator/helpers"
 	gcgc "go-code-generator/templates/config"
-	gcgm "go-code-generator/templates/main"
+	gcgd "go-code-generator/templates/domain"
+	gcgm "go-code-generator/templates/cmd"
 	"os"
 )
 
@@ -16,6 +17,7 @@ func main() {
 	helpers.GenerateGo("cmd", "main", gcgm.NewGoTpl())
 	helpers.GenerateGo("config", "config", gcgc.NewGoTpl())
 	helpers.GenerateJson("config", "config", gcgc.NewJsonTpl())
+	helpers.GenerateGo("domain", "service", gcgd.NewGoTpl())
 
 	wd, err := os.Getwd()
 	helpers.Die(err)

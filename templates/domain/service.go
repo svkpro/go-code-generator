@@ -7,15 +7,15 @@ import (
 	"path/filepath"
 )
 
-type MainTpl struct {
+type ServiceTpl struct {
 	PackageName string `json:"packageName"`
 	ServiceName string `json:"serviceName"`
 }
 
-func NewGoTpl() *MainTpl {
+func NewGoTpl() *ServiceTpl {
 	wd, err := os.Getwd()
 
-	tj, err := filepath.Abs(wd + "/templates/main/main.json")
+	tj, err := filepath.Abs(wd + "/templates/domain/service.json")
 	if err != nil {
 		panic(err)
 	}
@@ -35,7 +35,7 @@ func NewGoTpl() *MainTpl {
 		panic(err)
 	}
 
-	t := &MainTpl{}
+	t := &ServiceTpl{}
 	err = json.Unmarshal(data, t)
 	if err != nil {
 		panic(err)
